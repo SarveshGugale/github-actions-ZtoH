@@ -1,0 +1,58 @@
+# This is name of workflow that will be displayed on actions tab
+name: CICD
+
+# manual click whenever user needs 
+on:
+  workflow_dispatch:
+    inputs:
+      enviroment:
+        description: This is the enviroment value where this workflow runs
+        default: 'dev'
+        required: true
+        type: choice
+        options:
+          - dev
+          - stage
+          - prod
+jobs:
+  code:
+   runs-on: ubuntu-latest
+   steps:
+    - name: checkout code
+      run: echo "code clone from Github"
+      
+  Build:
+   needs: [code]
+   runs-on: ubuntu-latest
+   steps:
+    - name: build Docker container
+      run: echo "Docker container build"
+      
+  Test:
+   needs: [Build,code]
+   runs-on: ubuntu-latest
+   steps:
+    - name: Test container with tool 
+      run: echo "Testing container sonar_qube"
+      
+  Packages:
+   needs: [Test,Build,code]
+   runs-on: ubuntu-latest
+   steps:
+    - name: Test container with tool 
+      run: echo "Testing container sonar_qube"
+      
+  Release:
+   if: inputs.enviroment == 'dev'
+   needs: [Packages,Test,Build,code]
+   runs-on: ubuntu-latest
+   steps:
+    - name: Envoriments specifice release 
+      run: echo "One env to another env dev,stage,prod"  
+      
+  Configure:
+   needs: [Release,Packages,Test,Build,code]
+   runs-on: ubuntu-latest
+   steps:
+    - name: Moniter
+      run: echo "Sysdig for moniter L1,L2"
