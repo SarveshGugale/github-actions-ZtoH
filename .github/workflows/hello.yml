@@ -1,0 +1,25 @@
+# This is workflow name
+name: Hello workflow
+
+on:
+  workflow_dispatch:
+  # push:
+  #  branches: [main]
+  #  paths:
+  #    - '**.html'
+  
+# These are jobs inside the workflow
+jobs:
+  # This is the name of job
+  welcome:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Onboarding today
+        run: echo "Hello Dosto"
+
+      - name: Tell me Username
+        run: echo "Hello $USER"
+
+      - name: Welcome Here
+        run: echo "Hello ALL OF YOU"
